@@ -1,0 +1,18 @@
+# Backtest Reports Directory
+
+This directory will contain:
+- Backtest HTML reports from MT5 Strategy Tester
+- Trade CSV exports
+- Metrics comparison tables
+- Equity curve charts
+
+## Expected Files After Phase 1 Backtest:
+- Variant_A_2020_2024.html
+- Variant_B_2020_2024.html
+- Variant_C_2020_2024.html
+- Variant_D_2020_2024.html
+- Variant_A_trades.csv
+- Variant_B_trades.csv
+- Variant_C_trades.csv
+- Variant_D_trades.csv
+- Comparison_Matrix.xlsx
