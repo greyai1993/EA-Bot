@@ -9,6 +9,7 @@
 #property description "XAUUSD Multi-Strategy Expert Advisor - Research Framework"
 #property strict
 
+#include "include/IndicatorHelpers.mqh"
 #include "include/RiskManager.mqh"
 #include "include/Logger.mqh"
 #include "include/CircuitBreaker.mqh"
@@ -280,7 +281,7 @@ void CheckEntrySignals()
 //+------------------------------------------------------------------+
 void OpenLongPosition(string signal_reason)
 {
-   double atr = iATR(_Symbol, PERIOD_H1, InpATR_Period, 0);
+   double atr = iATR_v(_Symbol, PERIOD_H1, InpATR_Period, 0);
    double entry = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
    double sl = entry - (atr * InpSL_ATR_Multiplier);
    double tp = entry + (atr * InpTP_ATR_Multiplier);
@@ -322,7 +323,7 @@ void OpenLongPosition(string signal_reason)
 //+------------------------------------------------------------------+
 void OpenShortPosition(string signal_reason)
 {
-   double atr = iATR(_Symbol, PERIOD_H1, InpATR_Period, 0);
+   double atr = iATR_v(_Symbol, PERIOD_H1, InpATR_Period, 0);
    double entry = SymbolInfoDouble(_Symbol, SYMBOL_BID);
    double sl = entry + (atr * InpSL_ATR_Multiplier);
    double tp = entry - (atr * InpTP_ATR_Multiplier);
@@ -413,7 +414,7 @@ void ManagePositions()
 
       if(InpUseTrailingStop && current_profit_r >= InpTrailingTriggerR)
       {
-         double atr = iATR(_Symbol, PERIOD_H1, InpATR_Period, 0);
+         double atr = iATR_v(_Symbol, PERIOD_H1, InpATR_Period, 0);
          double trailing_distance = atr * InpTrailing_ATR_Multiplier;
 
          double new_sl;

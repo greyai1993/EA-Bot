@@ -6,6 +6,8 @@
 #property link      "https://github.com/greyai1993/EA-Bot"
 #property strict
 
+#include "IndicatorHelpers.mqh"
+
 class CircuitBreaker
 {
 private:
@@ -82,7 +84,7 @@ bool CircuitBreaker::IsVolatilityHigh(string &reason)
       return true;
    }
 
-   double current_atr = iATR(_Symbol, PERIOD_H1, m_atr_period, 0);
+   double current_atr = iATR_v(_Symbol, PERIOD_H1, m_atr_period, 0);
    if(current_atr == 0)
    {
       Print("WARNING: ATR value is 0");
@@ -159,7 +161,7 @@ double CircuitBreaker::CalculateMedianATR(int lookback, ENUM_TIMEFRAMES tf)
 
    for(int i = 0; i < lookback; i++)
    {
-      double atr = iATR(_Symbol, tf, m_atr_period, i + 1);
+      double atr = iATR_v(_Symbol, tf, m_atr_period, i + 1);
       if(atr == 0)
       {
          Print("WARNING: ATR at bar ", i + 1, " is 0");

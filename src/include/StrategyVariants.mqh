@@ -6,6 +6,8 @@
 #property link      "https://github.com/greyai1993/EA-Bot"
 #property strict
 
+#include "IndicatorHelpers.mqh"
+
 enum ENUM_STRATEGY_VARIANT
 {
    VARIANT_A,    // Pure EMA Pullback
@@ -163,7 +165,7 @@ ENUM_SIGNAL StrategyVariants::VariantA_Signal()
 //+------------------------------------------------------------------+
 bool StrategyVariants::IsUptrend_H1()
 {
-   double ema200 = iMA(_Symbol, PERIOD_H1, m_ema_trend_period, 0, MODE_EMA, PRICE_CLOSE, 0);
+   double ema200 = iMA_v(_Symbol, PERIOD_H1, m_ema_trend_period, 0, MODE_EMA, PRICE_CLOSE, 0);
    double close = iClose(_Symbol, PERIOD_H1, 0);
 
    return close > ema200;
@@ -172,7 +174,7 @@ bool StrategyVariants::IsUptrend_H1()
 //+------------------------------------------------------------------+
 bool StrategyVariants::IsDowntrend_H1()
 {
-   double ema200 = iMA(_Symbol, PERIOD_H1, m_ema_trend_period, 0, MODE_EMA, PRICE_CLOSE, 0);
+   double ema200 = iMA_v(_Symbol, PERIOD_H1, m_ema_trend_period, 0, MODE_EMA, PRICE_CLOSE, 0);
    double close = iClose(_Symbol, PERIOD_H1, 0);
 
    return close < ema200;
@@ -181,8 +183,8 @@ bool StrategyVariants::IsDowntrend_H1()
 //+------------------------------------------------------------------+
 bool StrategyVariants::IsPullbackLong_M15()
 {
-   double ema20 = iMA(_Symbol, PERIOD_M15, m_ema_entry_period, 0, MODE_EMA, PRICE_CLOSE, 0);
-   double ema50 = iMA(_Symbol, PERIOD_M15, m_ema_fast_period, 0, MODE_EMA, PRICE_CLOSE, 0);
+   double ema20 = iMA_v(_Symbol, PERIOD_M15, m_ema_entry_period, 0, MODE_EMA, PRICE_CLOSE, 0);
+   double ema50 = iMA_v(_Symbol, PERIOD_M15, m_ema_fast_period, 0, MODE_EMA, PRICE_CLOSE, 0);
    double close = iClose(_Symbol, PERIOD_M15, 0);
 
    return (close < ema20 && ema20 > ema50);
@@ -191,8 +193,8 @@ bool StrategyVariants::IsPullbackLong_M15()
 //+------------------------------------------------------------------+
 bool StrategyVariants::IsPullbackShort_M15()
 {
-   double ema20 = iMA(_Symbol, PERIOD_M15, m_ema_entry_period, 0, MODE_EMA, PRICE_CLOSE, 0);
-   double ema50 = iMA(_Symbol, PERIOD_M15, m_ema_fast_period, 0, MODE_EMA, PRICE_CLOSE, 0);
+   double ema20 = iMA_v(_Symbol, PERIOD_M15, m_ema_entry_period, 0, MODE_EMA, PRICE_CLOSE, 0);
+   double ema50 = iMA_v(_Symbol, PERIOD_M15, m_ema_fast_period, 0, MODE_EMA, PRICE_CLOSE, 0);
    double close = iClose(_Symbol, PERIOD_M15, 0);
 
    return (close > ema20 && ema20 < ema50);
@@ -201,8 +203,8 @@ bool StrategyVariants::IsPullbackShort_M15()
 //+------------------------------------------------------------------+
 bool StrategyVariants::RSI_CrossUp()
 {
-   double rsi_current = iRSI(_Symbol, PERIOD_M15, m_rsi_period, PRICE_CLOSE, 0);
-   double rsi_prev = iRSI(_Symbol, PERIOD_M15, m_rsi_period, PRICE_CLOSE, 1);
+   double rsi_current = iRSI_v(_Symbol, PERIOD_M15, m_rsi_period, PRICE_CLOSE, 0);
+   double rsi_prev = iRSI_v(_Symbol, PERIOD_M15, m_rsi_period, PRICE_CLOSE, 1);
 
    return (rsi_prev < m_rsi_oversold && rsi_current > m_rsi_oversold);
 }
@@ -210,8 +212,8 @@ bool StrategyVariants::RSI_CrossUp()
 //+------------------------------------------------------------------+
 bool StrategyVariants::RSI_CrossDown()
 {
-   double rsi_current = iRSI(_Symbol, PERIOD_M15, m_rsi_period, PRICE_CLOSE, 0);
-   double rsi_prev = iRSI(_Symbol, PERIOD_M15, m_rsi_period, PRICE_CLOSE, 1);
+   double rsi_current = iRSI_v(_Symbol, PERIOD_M15, m_rsi_period, PRICE_CLOSE, 0);
+   double rsi_prev = iRSI_v(_Symbol, PERIOD_M15, m_rsi_period, PRICE_CLOSE, 1);
 
    return (rsi_prev > m_rsi_overbought && rsi_current < m_rsi_overbought);
 }
@@ -219,7 +221,7 @@ bool StrategyVariants::RSI_CrossDown()
 //+------------------------------------------------------------------+
 bool StrategyVariants::IsTrending()
 {
-   double adx = iADX(_Symbol, PERIOD_H1, 14, PRICE_CLOSE, MODE_MAIN, 0);
+   double adx = iADX_v(_Symbol, PERIOD_H1, 14, 0, 0);
 
    return (adx >= m_adx_min);
 }
